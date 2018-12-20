@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue_grey_700"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/activity_vertical_margin_extra_small"
+    android:paddingBottom="@dimen/activity_vertical_margin_extra_small"
+    android:id="@+id/list_item_root">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:background="@color/blue_grey_700"
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/activity_vertical_margin_extra_small"
+        android:paddingBottom="@dimen/activity_vertical_margin_extra_small">
+
+        <TextView
+            android:id="@+id/entity_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/header" />
+
+        <TextView
+            android:id="@+id/entity_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/subHeader" />
+
+    </LinearLayout>
+    <com.example.tonir.area21frontend.UI.Buttons.ButtonBarButton
+        android:id="@+id/entity_button"
+        style="@style/darkButton"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

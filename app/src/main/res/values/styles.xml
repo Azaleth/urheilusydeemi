@@ -1,0 +1,123 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Activity with no Title -->
+    <style name="ThemeOverlay.MyNoTitleActivity" parent="Theme.AppCompat">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Dark Buttons -->
+    <style name="ThemeOverlay.MyDarkButton" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorButtonNormal">@color/blue_grey_500</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="darkButton">
+        <item name="android:background">@drawable/button</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="oldDarkButton" parent="Theme.AppCompat">
+        <item name="android:background">@drawable/button</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="darkButtonSetSize">
+        <item name="android:background">@drawable/button</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="ThemeOverlay.MyDarkButton.smallText" parent="ThemeOverlay.MyDarkButton">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- DarkEditView -->
+    <style name="myDarkText" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="myDarkEditText" parent="myDarkText">
+        <item name="android:inputType">textCapSentences</item>
+    </style>
+
+    <style name="myDarkEditNumber" parent="myDarkText">
+        <item name="android:inputType">number</item>
+    </style>
+
+    <style name="myDarkTextOutput" parent="myDarkText">
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TextInputLayoutStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="darkStringInputNumber" parent="myDarkText">
+
+    </style>
+
+    <style name="myDarkTextMainHeader" parent="myDarkTextOutput">
+        <item name="android:textSize">30dp</item>
+    </style>
+
+    <style name="myDarkTextSubHeader" parent="myDarkTextOutput">
+        <item name="android:textSize">10dp</item>
+    </style>
+
+    <style name="myDarkTextContent" parent="myDarkTextOutput">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="myDarkTextSubContent" parent="myDarkTextOutput">
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="darkCheckBox">
+        <item name="android:buttonTint">@color/blue_grey_700</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="myDarkRadioButton">
+        <item name="android:buttonTint">@color/blue_grey_700</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+</resources>

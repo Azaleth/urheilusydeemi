@@ -1,0 +1,15 @@
+<android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:theme="@style/AppTheme">
+
+    <EditText
+        android:id="@+id/field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:paddingBottom="5dp"
+        android:singleLine="true" />
+
+</android.support.design.widget.TextInputLayout>
