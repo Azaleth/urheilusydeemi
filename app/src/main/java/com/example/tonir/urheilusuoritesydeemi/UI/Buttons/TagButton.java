@@ -8,15 +8,17 @@ import android.widget.LinearLayout;
 
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
 import com.example.tonir.urheilusuoritesydeemi.R;
+import com.example.tonir.urheilusuoritesydeemi.UI.Events.ButtonClickEventArgs;
 
 public class TagButton
         extends BaseButton
         implements View.OnClickListener {
 
-    TagButtonListener listener;
+    ButtonListener listener;
 
-    public TagButton(Context context, ButtonParameters parameters, LinearLayout rootView, @Nullable Integer value, TagButtonListener listener) {
-        super(context, parameters, rootView, value);
+    public TagButton(Context context, ButtonParameters parameters, LinearLayout rootView, ButtonListener listener) {
+        super(context, rootView);
+
         this.listener = listener;
         inflate();
     }
@@ -32,19 +34,5 @@ public class TagButton
                 button.setText(parameters.getButtonTag().format(getContext()));
             } else button.setText("null");
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (parameters.isHighlightOnClick()) {
-            v.setSelected(!v.isSelected());
-        }
-        if (this.listener != null) {
-            listener.onClicked(this);
-        }
-    }
-
-    public interface TagButtonListener {
-        void onClicked(TagButton sender);
     }
 }

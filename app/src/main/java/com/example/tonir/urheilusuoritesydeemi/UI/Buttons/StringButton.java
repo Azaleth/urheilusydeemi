@@ -7,15 +7,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.example.tonir.urheilusuoritesydeemi.R;
+import com.example.tonir.urheilusuoritesydeemi.UI.Events.ButtonClickEventArgs;
 
 public class StringButton
         extends BaseButton
         implements View.OnClickListener {
 
-    StringButtonClickListener listener;
 
-    public StringButton(Context context, ButtonParameters parameters, LinearLayout rootView, @Nullable Integer value, StringButtonClickListener listener) {
-        super(context, parameters, rootView, value);
+
+    public StringButton(Context context, ButtonParameters parameters, LinearLayout rootView, ButtonListener listener) {
+        super(context, rootView);
+        this.parameters = parameters;
         this.listener = listener;
         inflate();
     }
@@ -36,15 +38,7 @@ public class StringButton
     }
 
 
-    @Override
-    public void onClick(View v) {
-        if (parameters.isHighlightOnClick()) {
-            v.setSelected(!v.isSelected());
-        }
-        if (this.listener != null) {
-            listener.onClicked(this);
-        }
-    }
+
 
     public interface StringButtonClickListener {
         void onClicked(StringButton sender);

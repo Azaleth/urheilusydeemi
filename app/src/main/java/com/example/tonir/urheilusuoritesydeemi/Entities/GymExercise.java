@@ -12,15 +12,16 @@ import com.example.tonir.urheilusuoritesydeemi.Handler.LocalStorageHelper;
 import com.example.tonir.urheilusuoritesydeemi.UI.ButtonBar.ButtonBarBase;
 import com.example.tonir.urheilusuoritesydeemi.UI.ButtonBar.ButtonBarParameters;
 import com.example.tonir.urheilusuoritesydeemi.UI.ButtonBar.StringButtonBar;
+import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
+import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonBuilder;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonParameters;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.StringButton;
 
-public class GymExercise extends BaseExercise
-        implements StringButtonBar.StringButtonBarListener,
-        StringButton.StringButtonClickListener {
+public class GymExercise extends BaseExercise {
     private GymSet set;
     private ButtonSets weights;
     private ButtonSets repeats;
+    private BaseButton.ButtonListener listener;
 
     public GymExercise(String exerciseType) {
         this.set = new GymSet();
@@ -66,7 +67,8 @@ public class GymExercise extends BaseExercise
     //endregion
 
     @Override
-    public LinearLayout GetNewLayout(Context context) {
+    public LinearLayout GetNewLayout(Context context, BaseButton.ButtonListener listener) {
+        this.listener = listener;
         LinearLayout linearLayout = new LinearLayout(context);
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -80,8 +82,7 @@ public class GymExercise extends BaseExercise
         ButtonParameters parameters = new ButtonParameters();
         parameters.setButtonText("Save");
 
-        StringButton saveButton = new StringButton(context, parameters, linearLayout, null, this);
-        linearLayout.addView(saveButton);
+        linearLayout.addView(ButtonBuilder.getButton(context, parameters, linearLayout, listener));
 
         return linearLayout;
     }
@@ -102,7 +103,7 @@ public class GymExercise extends BaseExercise
         parameters.setButtonsOnRow(5);
         parameters.setHighlightOnClick(false);
 
-        StringButtonBar stringButtonBar = new StringButtonBar(context, this, parameters);
+        StringButtonBar stringButtonBar = new StringButtonBar(context, listener, parameters);
         linearLayout.addView(stringButtonBar.getLayout());
 
         linearLayout.addView(LayoutHelper.GetBaseStringField(context,
@@ -110,18 +111,8 @@ public class GymExercise extends BaseExercise
                 LocalStorageHelper.GetLastValueByExerciseType(getExerciseType(), tag)));
 
         parameters.setButtonTexts(buttonSets.GetButtonTexts(false));
-        stringButtonBar = new StringButtonBar(context, this, parameters);
+        stringButtonBar = new StringButtonBar(context, listener, parameters);
         linearLayout.addView(stringButtonBar.getLayout());
         return linearLayout;
-    }
-
-    @Override
-    public void OnClicked(StringButtonBar.StringButtonBarListener sender) {
-
-    }
-
-    @Override
-    public void onClicked(StringButton sender) {
-
     }
 }

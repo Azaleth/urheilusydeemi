@@ -15,25 +15,30 @@ import com.example.tonir.urheilusuoritesydeemi.Fragments.FragmentParameters;
 import com.example.tonir.urheilusuoritesydeemi.Handler.FragmentHandler;
 import com.example.tonir.urheilusuoritesydeemi.R;
 import com.example.tonir.urheilusuoritesydeemi.UI.ButtonBar.ButtonBarBase;
+import com.example.tonir.urheilusuoritesydeemi.UI.ButtonBar.ButtonBarParameters;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
 import com.example.tonir.urheilusuoritesydeemi.UI.Dialogs.ExerciseSeriesSelectionDialog;
 import com.example.tonir.urheilusuoritesydeemi.UI.Dialogs.ExerciseTypeSelectionDialog;
+import com.example.tonir.urheilusuoritesydeemi.UI.Events.BaseEventArgs;
+import com.example.tonir.urheilusuoritesydeemi.UI.Events.ButtonClickEventArgs;
 import com.example.tonir.urheilusuoritesydeemi.UI.NoEditStringField;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag.GYM;
+
 public class MainActivity extends AppCompatActivity
-        implements Buttons.ButtonBarListener,
-        BaseButton.ButtonClickListener,
+        implements
         FragmentBase.FragmentListener,
         BaseExercise.BaseExerciseListener,
         View.OnClickListener,
         ExerciseTypeSelectionDialog.OnExerciseSelectedListener,
-        ExerciseSeriesSelectionDialog.OnExerciseSeriesSelectedListener {
+        ExerciseSeriesSelectionDialog.OnExerciseSeriesSelectedListener,
+        BaseButton.ButtonListener {
 
-    private static final ButtonTag[] buttonBarButtons = new ButtonTag[]{ButtonTag.GYM, ButtonTag.RUN};
+    private static final ButtonTag[] buttonBarButtons = new ButtonTag[]{GYM, ButtonTag.RUN};
     private static final String TAG = MainActivity.class.getSimpleName();
     private FragmentHandler fragmentHandler;
     private List<String> headerString;
@@ -57,25 +62,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void InitButtonBar() {
-        ButtonBarBase buttonBarBase = new ButtonBarBase(getApplicationContext(), this, buttonBarButtons);
-        buttonBarBase.allowOnlySingleButtonSelected(true);
+        ButtonBarParameters parameters = new ButtonBarParameters();
+        parameters.setSingleSelection(true);
+        parameters.setButtonTags(buttonBarButtons);
+        ButtonBarBase buttonBarBase = new ButtonBarBase(this, parameters);
         ((LinearLayout) findViewById(R.id.bottom_button_bar)).addView(buttonBarBase.getLayout());
     }
 
-    @Override
-    public void onButtonBarButtonClicked(double amount, ButtonTag tag, String buttonText) {
-        if (tag != null) {
-            try {
-                switch (tag) {
-                    case GYM:
-                        ExerciseSeriesSelectionDialog dialog = new ExerciseSeriesSelectionDialog(this, this, fireBaseHandler.getExerciseSeries());
-                        dialog.show();
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "onButtonBarButtonClicked: ", e);
-            }
-        }
-    }
+
+
 
     @Override
     public void listItemSelected(BaseExercise exercise) {
@@ -95,9 +90,6 @@ public class MainActivity extends AppCompatActivity
         return this;
     }
 
-    public Buttons.ButtonBarListener getButtonBarListener() {
-        return this;
-    }
 
     public void setViewHeader(String header) {
         this.headerString.clear();
@@ -173,12 +165,6 @@ public class MainActivity extends AppCompatActivity
 
         return fragmentParameters;
     }
-
-    @Override
-    public void onButtonClicked(double amount, ButtonTag tag, String buttonText) {
-
-    }
-
     @Override
     public void OnExerciseTypeSelected(String exerciseType) {
         try {
@@ -187,6 +173,10 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             Log.e(TAG, "OnExerciseTypeSelected: ", e);
         }
+    }
+
+    public BaseButton.ButtonListener getButtonListener(){
+        return  this;
     }
 
     @Override
@@ -201,4 +191,27 @@ public class MainActivity extends AppCompatActivity
             Log.e(TAG, "OnExerciseSeriesTypeSelected: ", e);
         }
     }
+
+    @Override
+    public void ClickEvent(Object sender, BaseEventArgs args) {
+        if(args instanceof ButtonClickEventArgs){
+            ButtonTag tag = ((ButtonClickEventArgs)args).getButtonParameters().getButtonTag();
+            if (tag != null) {
+                try {
+                    switch (tag) {
+                        case GYM:
+                            ExerciseSeriesSelectionDialog dialog = new ExerciseSeriesSelectionDialog(this, this, fireBaseHandler.getExerciseSeries());
+                            dialog.show();
+                            break;
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "onButtonBarButtonClicked: ", e);
+                }
+            }
+        }
+    }
+
+    //region listeners
+
+    //endregion
 }

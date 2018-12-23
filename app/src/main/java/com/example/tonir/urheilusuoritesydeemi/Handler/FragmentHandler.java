@@ -45,8 +45,7 @@ public class FragmentHandler {
     }
 
     //region Fragment Visibility
-    //region toggle
-    public void toggle(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonClickListener clickCallback) throws NoSuchFieldException {
+    public void toggle(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) throws NoSuchFieldException {
         if (visibleFragmentTags == null) {
             visibleFragmentTags = new ArrayList<>();
         }
@@ -56,7 +55,6 @@ public class FragmentHandler {
             show(fragmentParameters, clickCallback);
         }
     }
-//endregion
 
     public void hide(UUID id) {
         try {
@@ -120,7 +118,7 @@ public class FragmentHandler {
         }
     }
 
-    public void show(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonClickListener clickCallback) throws NoSuchFieldException {
+    public void show(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) throws NoSuchFieldException {
         boolean created = CreateFragmentIfNotExists(fragmentParameters, clickCallback);
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentParameters.getIdentifier().toString());
         if (fragment == null) {
@@ -168,7 +166,7 @@ public class FragmentHandler {
     //endregion
 
     //region private
-    private boolean CreateFragmentIfNotExists(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonClickListener clickCallback) {
+    private boolean CreateFragmentIfNotExists(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) {
         if (!FragmentExists(fragmentParameters.getIdentifier())) {
             CreateNewFragment(fragmentParameters, clickCallback);
             return true;
@@ -185,7 +183,7 @@ public class FragmentHandler {
         return (fragmentCache != null && id != null && fragmentCache.containsKey(id));
     }
 
-    private void CreateNewFragment(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonClickListener clickCallback) {
+    private void CreateNewFragment(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) {
         try {
             Fragment fragment = FragmentBase.newInstance(fragmentParameters, clickCallback);
             addFragmentToCache(fragment, fragmentParameters.getIdentifier());
@@ -206,23 +204,11 @@ public class FragmentHandler {
         this.TAG = TAG;
     }
 
-    public FragmentManager getFragmentManager() {
-        return fragmentManager;
-    }
-
-    public void setFragmentManager(FragmentManager fragmentManager) {
-        this.fragmentManager = fragmentManager;
-    }
-
-    public void addFragmentToCache(Fragment fragment, UUID id) {
+    private void addFragmentToCache(Fragment fragment, UUID id) {
         if (fragmentCache == null) {
             fragmentCache = new ConcurrentHashMap<>();
         }
         fragmentCache.put(id, fragment);
-    }
-
-    public void removeFragmentFromCache(FragmentBase fragment, String tag) {
-        fragmentCache.remove(tag, fragment);
     }
 
     public void destroyFragment(UUID id) {

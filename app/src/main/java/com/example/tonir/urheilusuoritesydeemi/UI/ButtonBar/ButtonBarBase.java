@@ -7,13 +7,16 @@ import android.widget.LinearLayout;
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
 import com.example.tonir.urheilusuoritesydeemi.R;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
+import com.example.tonir.urheilusuoritesydeemi.UI.Events.BaseEventArgs;
 
 import java.util.List;
 
 public class ButtonBarBase
         extends LinearLayout {
+
     static final String TAG = ButtonBarBase.class.getSimpleName();
     Context context;
+    BaseButton.ButtonListener listener;
 
     LinearLayout view;
     List<BaseButton> buttons;
@@ -37,7 +40,6 @@ public class ButtonBarBase
     public LinearLayout getLayout() {
         return this.layout;
     }
-
 
     void inflateLayout(Context context) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

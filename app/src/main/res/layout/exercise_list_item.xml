@@ -38,9 +38,5 @@
 
     </LinearLayout>
     <com.example.tonir.area21frontend.UI.Buttons.ButtonBarButton
-        android:id="@+id/entity_button"
-        style="@style/darkButton"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="1"/>
+        android:id="@+id/entity_button"/>
 </LinearLayout>

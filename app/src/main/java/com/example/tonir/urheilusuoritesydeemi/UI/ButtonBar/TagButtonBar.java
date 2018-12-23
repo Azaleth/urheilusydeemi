@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
+import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonBuilder;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonParameters;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.TagButton;
 
@@ -13,11 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TagButtonBar
-        extends ButtonBarBase
-        implements TagButton.TagButtonListener {
-    TagButtonBarListener listener;
+        extends ButtonBarBase {
+    BaseButton.ButtonListener listener;
 
-    public TagButtonBar(Context context, TagButtonBarListener listener, ButtonBarParameters parameters) {
+    public TagButtonBar(Context context, BaseButton.ButtonListener listener, ButtonBarParameters parameters) {
         super(context, parameters);
         this.listener = listener;
     }
@@ -59,19 +59,10 @@ public class TagButtonBar
         LinearLayout buttonRow = new LinearLayout(context);
         buttonRow.setOrientation(LinearLayout.HORIZONTAL);
         for (ButtonTag tag : tags) {
-            ButtonParameters parameters = new ButtonParameters();
-            parameters.setButtonTag(tag);
-            buttons.add(new TagButton(context, parameters, buttonRow, null, this));
+            ButtonParameters parameters =  ButtonBuilder.getParameters(tag);
+            parameters.parseParameters(this.buttonBarParameters.highlightOnClick);
+            buttons.add(ButtonBuilder.getButton(context, parameters, buttonRow, listener));
         }
         return buttonRow;
-    }
-
-    public interface TagButtonBarListener {
-        void OnClicked(TagButtonBar sender);
-    }
-
-    @Override
-    public void onClicked(TagButton sender) {
-
     }
 }

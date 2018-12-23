@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.widget.LinearLayout;
 
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
+import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonBuilder;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonParameters;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.StringButton;
 
@@ -12,12 +13,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class StringButtonBar
-        extends ButtonBarBase
-        implements StringButton.StringButtonClickListener {
-    StringButtonBarListener listener;
+        extends ButtonBarBase{
 
 
-    public StringButtonBar(Context context, StringButtonBarListener listener, ButtonBarParameters parameters) {
+    public StringButtonBar(Context context, BaseButton.ButtonListener listener, ButtonBarParameters parameters) {
         super(context, parameters);
         this.listener = listener;
         buildLayout(parameters.buttonTexts);
@@ -54,7 +53,7 @@ public class StringButtonBar
         for (String text : texts) {
             ButtonParameters parameters = new ButtonParameters();
             parameters.setButtonText(text);
-            buttons.add(new StringButton(context, parameters, buttonRow, null, this));
+            buttons.add(ButtonBuilder.getButton(context, parameters, buttonRow, listener));
         }
         return buttonRow;
     }
@@ -67,12 +66,4 @@ public class StringButtonBar
         }
     }
 
-    public interface StringButtonBarListener {
-        void OnClicked(StringButtonBarListener sender);
-    }
-
-    @Override
-    public void onClicked(StringButton sender) {
-
-    }
 }

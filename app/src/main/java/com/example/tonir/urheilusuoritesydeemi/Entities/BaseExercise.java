@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 import com.example.tonir.urheilusuoritesydeemi.Enums.EntityType;
 import com.example.tonir.urheilusuoritesydeemi.Enums.FragmentType;
+import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
 
 import java.util.UUID;
 
@@ -69,7 +70,7 @@ public class BaseExercise {
     //endregion
 
 
-    public LinearLayout GetNewLayout(Context context){
+    public LinearLayout     GetNewLayout(Context context, BaseButton.ButtonListener listener){
         return new LinearLayout(context);
     }
     public LinearLayout GetInformationLayout(Context context){

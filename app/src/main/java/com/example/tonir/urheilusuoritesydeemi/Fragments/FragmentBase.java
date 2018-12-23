@@ -44,13 +44,13 @@ public abstract class FragmentBase<T extends ViewModel, Y extends BaseExercise>
     Observer<Y> observer;
     Observer<List<Y>> listObserver;
     ExerciseListAdapter exerciseListAdapter;
-    BaseButton.ButtonClickListener clickCallback;
+    BaseButton.ButtonListener clickCallback;
     ButtonTag tag;
     FragmentParameters fragmentParameters;
     //endregion
 
     //region newInstance
-    public static FragmentBase newInstance(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonClickListener clickCallback) throws ClassNotFoundException {
+    public static FragmentBase newInstance(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) throws ClassNotFoundException {
         FragmentBase fragment;
         switch (fragmentParameters.GetFragmentType()) {
             case GYM_EXERCISE:
@@ -149,7 +149,7 @@ public abstract class FragmentBase<T extends ViewModel, Y extends BaseExercise>
                         observable.setListener(((MainActivity) getActivity()).getExerciseListener());
                     }
                     if (getActivity() instanceof MainActivity) {
-                        replaceView(observable.GetNewLayout(getContext(), ((MainActivity) getActivity()).getButtonBarListener()));
+                        replaceView(observable.GetNewLayout(getContext(), ((MainActivity)getActivity()).getButtonListener()));
                     }
                 }
             }

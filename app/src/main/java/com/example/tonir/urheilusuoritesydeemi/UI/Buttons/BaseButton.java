@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import com.example.tonir.urheilusuoritesydeemi.Entities.BaseExercise;
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
 import com.example.tonir.urheilusuoritesydeemi.R;
+import com.example.tonir.urheilusuoritesydeemi.UI.Events.BaseEventArgs;
+import com.example.tonir.urheilusuoritesydeemi.UI.Events.ButtonClickEventArgs;
 import com.example.tonir.urheilusuoritesydeemi.UI.NoEditStringField;
 
 import java.util.UUID;
@@ -25,30 +27,24 @@ public class BaseButton
     LinearLayout root;
     NoEditStringField field;
     Button button;
-    double value;
     ButtonParameters parameters;
+    ButtonListener listener;
 
-    public BaseButton(Context context, ButtonParameters parameters, LinearLayout root, @Nullable Integer value) {
-        super(context);
-        this.parameters = parameters;
-        this.root = root;
-
-        if (value != null) {
-            this.value = value;
-        } else {
-            try {
-                this.value = Double.parseDouble(parameters.getButtonText());
-                if (this.value < 0) {
-                    Log.e(TAG, "ButtonBarButton: TURHAA SPÄMMIÄ LUULTAVASTI");
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "ButtonBarButton: TURHAA SPÄMMIÄ LUULTAVASTI", e);
-            }
-        }
+    public void setSelected(boolean selected) {
+        this.button.setSelected(selected);
     }
 
-    public void setSelected(boolean selected){
-        this.button.setSelected(selected);
+    public BaseButton(Context context, LinearLayout root) {
+        super(context);
+        this.root = root;
+
+        if (parameters.getValue() == null) {
+            try {
+                parameters.setValue(Double.parseDouble(parameters.getButtonText()));
+            } catch (Exception e) {
+                Log.e(TAG, "BaseButton: ", e);
+            }
+        }
     }
 
     //region setter/getter
@@ -57,10 +53,6 @@ public class BaseButton
         if (this.button != null) {
             button.setText(tag.format(getContext()));
         }
-    }
-
-    public static String getTAG() {
-        return TAG;
     }
 
     public void setView(View view) {
@@ -91,14 +83,6 @@ public class BaseButton
         this.button = button;
     }
 
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
     public ButtonParameters getParameters() {
         return parameters;
     }
@@ -106,5 +90,18 @@ public class BaseButton
     public void setParameters(ButtonParameters parameters) {
         this.parameters = parameters;
     }
+
     //endregion
+    public interface ButtonListener {
+        void ClickEvent(Object sender, BaseEventArgs args);
+    }
+
+    public void onClick(View v) {
+        if (parameters.isHighlightOnClick()) {
+            v.setSelected(!v.isSelected());
+        }
+        if (this.listener != null) {
+            listener.ClickEvent(this, new ButtonClickEventArgs(this.parameters));
+        }
+    }
 }
