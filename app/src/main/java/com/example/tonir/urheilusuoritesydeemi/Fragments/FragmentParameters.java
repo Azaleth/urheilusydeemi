@@ -1,8 +1,9 @@
 package com.example.tonir.urheilusuoritesydeemi.Fragments;
 
 import com.example.tonir.urheilusuoritesydeemi.Entities.BaseExercise;
+import com.example.tonir.urheilusuoritesydeemi.Entities.ExerciseSeries;
+import com.example.tonir.urheilusuoritesydeemi.Entities.ExerciseType;
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
-import com.example.tonir.urheilusuoritesydeemi.Enums.EntityType;
 import com.example.tonir.urheilusuoritesydeemi.Enums.FragmentType;
 import com.google.gson.GsonBuilder;
 
@@ -11,13 +12,13 @@ import java.util.UUID;
 public class FragmentParameters {
     private final static String TAG = FragmentParameters.class.getSimpleName();
     private String fragmentTag;
-    private UUID ownerId;
-    private EntityType ownerEntityType;
+    private String ownerId;
     private FragmentType fragmentType;
     private String query;
     private String buttonTag;
     private UUID identifier;
-    private String exerciseType;
+    private ExerciseType exerciseType;
+    private ExerciseSeries exerciseSeries;
 
 
     public FragmentParameters() {
@@ -60,14 +61,6 @@ public class FragmentParameters {
         this.identifier = identifier;
     }
 
-    public String getExerciseType() {
-        return exerciseType;
-    }
-
-    public void setExerciseType(String exerciseType) {
-        this.exerciseType = exerciseType;
-    }
-
     //endregion
     //region advanced getter/setter
     public ButtonTag GetButtonTag(){
@@ -91,29 +84,35 @@ public class FragmentParameters {
         }
     }
     public void setOwner(BaseExercise owner){
-        if(owner != null && owner.getId() != null) {
-            this.ownerId = owner.getId();
-        }
-        if(owner != null && owner.getEntityType() != null) {
-            this.ownerEntityType = owner.getEntityType();
+        if(owner != null && owner.getOwnIdentifier() != null) {
+            this.ownerId = owner.getOwnIdentifier();
         }
     }
 
-    public UUID getOwnerId() {
+    public String getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(UUID ownerId) {
+    public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
 
-    public EntityType getOwnerEntityType() {
-        return ownerEntityType;
+    public ExerciseType getExerciseType() {
+        return exerciseType;
     }
 
-    public void setOwnerEntityType(EntityType ownerEntityType) {
-        this.ownerEntityType = ownerEntityType;
+    public void setExerciseType(ExerciseType exerciseType) {
+        this.exerciseType = exerciseType;
     }
+
+    public ExerciseSeries getExerciseSeries() {
+        return exerciseSeries;
+    }
+
+    public void setExerciseSeries(ExerciseSeries exerciseSeries) {
+        this.exerciseSeries = exerciseSeries;
+    }
+
     //endregion
 
     public String GetAsString() {

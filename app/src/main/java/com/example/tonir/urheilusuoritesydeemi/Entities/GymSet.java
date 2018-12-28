@@ -3,7 +3,6 @@ package com.example.tonir.urheilusuoritesydeemi.Entities;
 public class GymSet {
     private int repeats;
     private double weights;
-    private String exerciseType;
 
     public GymSet(){}
 
@@ -24,14 +23,5 @@ public class GymSet {
     public void setWeights(double weights) {
         this.weights = weights;
     }
-
-    public String getExerciseType() {
-        return exerciseType;
-    }
-
-    public void setExerciseType(String exerciseType) {
-        this.exerciseType = exerciseType;
-    }
-
     //endregion
 }

@@ -1,4 +1,4 @@
-package com.example.tonir.urheilusuoritesydeemi.Handler;
+package com.example.tonir.urheilusuoritesydeemi.Helpers;
 
 import android.content.Context;
 import android.widget.LinearLayout;

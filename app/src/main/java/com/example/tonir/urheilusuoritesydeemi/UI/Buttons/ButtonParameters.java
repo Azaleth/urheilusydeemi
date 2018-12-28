@@ -7,9 +7,10 @@ import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonType;
 
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 public class ButtonParameters {
-    private UUID identifier;
+    private String identifier;
     private BaseExercise owner;
     private ButtonTag buttonTag;
     private String buttonText;
@@ -26,10 +27,10 @@ public class ButtonParameters {
     public void parseParameters(Boolean highlightOnClick, Double value){
         parseParameters(highlightOnClick, value, null);
     }
-    public void parseParameters(Boolean highlightOnClick, Double value, UUID identifier){
+    public void parseParameters(Boolean highlightOnClick, Double value, String identifier){
         parseParameters(highlightOnClick, value, identifier, null);
     }
-    public void parseParameters(Boolean highlightOnClick, Double value, UUID identifier, BaseExercise owner){
+    public void parseParameters(Boolean highlightOnClick, Double value, String identifier, BaseExercise owner){
         this.setHighlightOnClick(highlightOnClick);
         this.setValue(value);
         this.setIdentifier(identifier);
@@ -49,11 +50,11 @@ public class ButtonParameters {
         }
     }
 
-    public UUID getIdentifier() {
+    public String  getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(UUID identifier) {
+    public void setIdentifier(String  identifier) {
         this.identifier = identifier;
     }
 

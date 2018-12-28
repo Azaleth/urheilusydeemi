@@ -4,7 +4,8 @@ import android.content.Context;
 
 public enum ButtonTag {
     GYM,
-    RUN;
+    RUN,
+    SAVE;
 
     public String format(Context context) {
         return this.toString();

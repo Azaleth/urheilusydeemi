@@ -1,83 +1,76 @@
 package com.example.tonir.urheilusuoritesydeemi.Entities;
 
-import android.content.Context;
-import android.support.annotation.Nullable;
-import android.widget.LinearLayout;
+import android.util.Log;
 
-import com.example.tonir.urheilusuoritesydeemi.Enums.EntityType;
-import com.example.tonir.urheilusuoritesydeemi.Enums.FragmentType;
-import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
+import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
+import com.example.tonir.urheilusuoritesydeemi.Events.BaseEvent;
+import com.example.tonir.urheilusuoritesydeemi.Events.ButtonClickEvent;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
+import com.google.firebase.database.Exclude;
 
-import java.util.UUID;
+public abstract class BaseExercise
+        extends FirebaseEntity
+        implements GeneralEventListener {
+    static final String TAG = BaseExercise.class.getSimpleName();
+    ExerciseType exerciseType;
+    ExerciseSeries seriesType;
 
-public class BaseExercise {
-    private UUID id;
-    private String name;
-    private UUID exerciseGroup;
-    private EntityType entityType;
-    private String type;
-    private BaseExerciseListener listener;
+    @Exclude
+    GeneralEventListener listener;
 
     //region getter/setter
-    @Nullable
-    public UUID getId() {
-        return id;
+    public ExerciseType getExerciseType() {
+        return exerciseType;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setExerciseType(ExerciseType exerciseType) {
+        this.exerciseType = exerciseType;
     }
 
-    public String getName() {
-        return name;
+    public ExerciseSeries getSeriesType() {
+        return seriesType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSeriesType(ExerciseSeries seriesType) {
+        this.seriesType = seriesType;
     }
 
-    public UUID getExerciseGroup() {
-        return exerciseGroup;
-    }
-
-    public void setExerciseGroup(UUID exerciseGroup) {
-        this.exerciseGroup = exerciseGroup;
-    }
-
-    public EntityType getEntityType() {
-        return entityType;
-    }
-
-    public void setEntityType(EntityType entityType) {
-        this.entityType = entityType;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public BaseExerciseListener getListener() {
+    @Exclude
+    public GeneralEventListener getListener() {
         return listener;
     }
 
-    public void setListener(BaseExerciseListener listener) {
+    @Exclude
+    public void setListener(GeneralEventListener listener) {
         this.listener = listener;
     }
+
     //endregion
-
-
-    public LinearLayout     GetNewLayout(Context context, BaseButton.ButtonListener listener){
-        return new LinearLayout(context);
+    @Override
+    public void Event(Object sender, BaseEvent event) {
+        //TODO painon/toistojen määrät
+        try {
+            if (event instanceof ButtonClickEvent) {
+                ButtonTag tag = ((ButtonClickEvent) event).getButtonParameters().getButtonTag();
+                if (tag != null) {
+                    switch (tag) {
+                        case SAVE:
+                            listener.Event(this, event);
+                            break;
+                        default:
+                            if (listener != null) {
+                                listener.Event(sender, event);
+                            }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Event: ", e);
+        }
     }
-    public LinearLayout GetInformationLayout(Context context){
-        return  new LinearLayout(context);
-    }
 
-    public interface BaseExerciseListener{
-        void callback(BaseExercise caller, FragmentType type);
+    @Override
+    public boolean ownerIsCurrentUser() {
+        return true;
     }
 }

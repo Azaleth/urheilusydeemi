@@ -1,6 +1,7 @@
 package com.example.tonir.urheilusuoritesydeemi.UI.ButtonBar;
 
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
+import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonType;
 
 public class ButtonBarParameters {
     ButtonTag[] buttonTags;
@@ -16,12 +17,34 @@ public class ButtonBarParameters {
 
 
     //region getter setter
+    public ButtonType getButtonType(){
+        if (this.buttonTags != null) {
+            return ButtonType.TAG;
+        } else if (this.buttonTexts != null) {
+            return ButtonType.TEXT;
+        }else{
+            return null;
+        }
+    }
+
+    public void setButtonInfos(Object[] texts)
+    {
+        if(texts.length == 0){
+            throw new IllegalArgumentException();
+        }
+        if(texts instanceof ButtonTag[]){
+            setButtonTags((ButtonTag[]) texts);
+        }
+        else if(texts instanceof String[]){
+            setButtonTexts((String[])texts);
+        }
+    }
 
     public ButtonTag[] getButtonTags() {
         return buttonTags;
     }
 
-    public void setButtonTags(ButtonTag[] buttonTags) {
+    private void setButtonTags(ButtonTag[] buttonTags) {
         this.buttonTags = buttonTags;
     }
 
@@ -29,7 +52,7 @@ public class ButtonBarParameters {
         return buttonTexts;
     }
 
-    public void setButtonTexts(String[] buttonTexts) {
+    private void setButtonTexts(String[] buttonTexts) {
         this.buttonTexts = buttonTexts;
     }
 

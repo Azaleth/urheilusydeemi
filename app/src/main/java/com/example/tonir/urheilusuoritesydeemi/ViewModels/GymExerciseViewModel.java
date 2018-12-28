@@ -4,8 +4,9 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.tonir.urheilusuoritesydeemi.Entities.BaseExercise;
+import com.example.tonir.urheilusuoritesydeemi.Entities.ExerciseType;
 import com.example.tonir.urheilusuoritesydeemi.Entities.GymExercise;
-import com.example.tonir.urheilusuoritesydeemi.FireBaseService.FireBaseHandler;
+import com.example.tonir.urheilusuoritesydeemi.Handler.FireBaseHandler;
 
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ public class GymExerciseViewModel extends ViewModel implements FireBaseHandler.E
         return gymExercise;
     }
 
-    public MutableLiveData<GymExercise> GetNewGymExerciseByType(String type) {
+    public MutableLiveData<GymExercise> GetNewGymExerciseByType(ExerciseType type) {
         gymExercise = new MutableLiveData<>();
         CreateNewExercise(type);
 
@@ -32,10 +33,11 @@ public class GymExerciseViewModel extends ViewModel implements FireBaseHandler.E
     }
 
     private void LoadGymExercise(UUID id) {
+        //FireBaseHandler
         //TODO
     }
 
-    private void CreateNewExercise(String exerciseType) {
+    private void CreateNewExercise(ExerciseType exerciseType) {
         gymExercise.postValue(new GymExercise(exerciseType));
     }
 

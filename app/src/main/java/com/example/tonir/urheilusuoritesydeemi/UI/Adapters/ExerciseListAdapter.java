@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.tonir.urheilusuoritesydeemi.Entities.BaseExercise;
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
 import com.example.tonir.urheilusuoritesydeemi.R;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonBuilder;
@@ -22,11 +23,11 @@ public class ExerciseListAdapter<Y extends BaseExercise> extends ArrayAdapter<Y>
     private static final String TAG = ExerciseListAdapter.class.getSimpleName();
     private Context context;
     private List<Y> entities;
-    private BaseButton.ButtonListener clickCallback;
+    private GeneralEventListener clickCallback;
     private ButtonTag tag;
     ViewGroup parent;
 
-    public ExerciseListAdapter(Context context, List<Y> entities, BaseButton.ButtonListener clickCallback, @Nullable ButtonTag tag) {
+    public ExerciseListAdapter(Context context, List<Y> entities, GeneralEventListener clickCallback, @Nullable ButtonTag tag) {
         super(context, 0, entities);
         this.context = context;
         this.entities = entities;
@@ -58,17 +59,17 @@ public class ExerciseListAdapter<Y extends BaseExercise> extends ArrayAdapter<Y>
 
     private void InitExerciseView(View listItem, BaseExercise exercise) {
         TextView name = listItem.findViewById(R.id.entity_name);
-        name.setText(exercise.getName());
+        name.setText(exercise.getExerciseType().getExerciseType());
 
         TextView type = listItem.findViewById(R.id.entity_type);
-        type.setText(exercise.getType());
+        type.setText(exercise.getExerciseType().getExerciseType());
 
         LinearLayout buttonPlaceholder = listItem.findViewById(R.id.entity_button);
         if (tag != null) {
             ButtonParameters parameters = new ButtonParameters();
             parameters.setOwner(exercise);
             parameters.setButtonTag(tag);
-            parameters.setIdentifier(exercise.getId());
+            parameters.setIdentifier(exercise.getOwnIdentifier());
             ButtonBuilder.getButton(context, parameters, buttonPlaceholder, clickCallback);
         } else {
             buttonPlaceholder.setVisibility(View.GONE);

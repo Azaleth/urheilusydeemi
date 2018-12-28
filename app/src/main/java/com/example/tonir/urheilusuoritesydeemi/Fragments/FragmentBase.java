@@ -17,12 +17,16 @@ import android.widget.ListView;
 
 import com.example.tonir.urheilusuoritesydeemi.Activities.MainActivity;
 import com.example.tonir.urheilusuoritesydeemi.Entities.BaseExercise;
+import com.example.tonir.urheilusuoritesydeemi.Entities.ExerciseSeries;
+import com.example.tonir.urheilusuoritesydeemi.Entities.ExerciseType;
+import com.example.tonir.urheilusuoritesydeemi.Entities.GymExercise;
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
 import com.example.tonir.urheilusuoritesydeemi.Enums.FragmentType;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
 import com.example.tonir.urheilusuoritesydeemi.Handler.ProgressHandler;
 import com.example.tonir.urheilusuoritesydeemi.R;
 import com.example.tonir.urheilusuoritesydeemi.UI.Adapters.ExerciseListAdapter;
-import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
+import com.example.tonir.urheilusuoritesydeemi.UI.EntityUIHelpers.ExerciseUiHelper;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +37,6 @@ public abstract class FragmentBase<T extends ViewModel, Y extends BaseExercise>
     //region properties
     private static final String TAG = FragmentBase.class.getSimpleName();
     FragmentType type;
-    String exerciseType;
     UUID id;
     FrameLayout frameLayout;
     View infoView;
@@ -44,13 +47,13 @@ public abstract class FragmentBase<T extends ViewModel, Y extends BaseExercise>
     Observer<Y> observer;
     Observer<List<Y>> listObserver;
     ExerciseListAdapter exerciseListAdapter;
-    BaseButton.ButtonListener clickCallback;
+    GeneralEventListener clickCallback;
     ButtonTag tag;
     FragmentParameters fragmentParameters;
     //endregion
 
     //region newInstance
-    public static FragmentBase newInstance(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) throws ClassNotFoundException {
+    public static FragmentBase newInstance(FragmentParameters fragmentParameters, @Nullable GeneralEventListener clickCallback) throws ClassNotFoundException {
         FragmentBase fragment;
         switch (fragmentParameters.GetFragmentType()) {
             case GYM_EXERCISE:
@@ -73,14 +76,18 @@ public abstract class FragmentBase<T extends ViewModel, Y extends BaseExercise>
         if (fragmentParameters.getQuery() != null) {
             arguments.putString("query", fragmentParameters.getQuery());
         }
-        if (fragmentParameters.getOwnerEntityType() != null) {
-            arguments.putString("entityType", fragmentParameters.getOwnerEntityType().toString());
-        }
         if (fragmentParameters.GetButtonTag() != null) {
             fragment.tag = fragmentParameters.GetButtonTag();
         }
         if (clickCallback != null) {
             fragment.clickCallback = clickCallback;
+        }
+        if(fragmentParameters.getExerciseType() != null){
+            arguments.putSerializable("exerciseType", fragmentParameters.getExerciseType());
+        }
+        if(fragmentParameters.getExerciseSeries() != null){
+            arguments.putSerializable("seriesType", fragmentParameters.getExerciseSeries());
+
         }
         fragment.setArguments(arguments);
 
@@ -98,6 +105,12 @@ public abstract class FragmentBase<T extends ViewModel, Y extends BaseExercise>
         }
         if (args.containsKey("buttonTag")) {
             tag = ButtonTag.valueOf(args.getString("buttonTag"));
+        }
+        if(args.containsKey("seriesType")){
+            fragmentParameters.setExerciseSeries((ExerciseSeries) args.getSerializable("seriesType"));
+        }
+        if(args.containsKey("exerciseType")){
+            fragmentParameters.setExerciseType((ExerciseType) args.getSerializable("exerciseType"));
         }
     }
 
@@ -140,16 +153,22 @@ public abstract class FragmentBase<T extends ViewModel, Y extends BaseExercise>
                 }
                 if (!type.isNew() && frameLayout != null && observable != null) {
                     if (getActivity() instanceof MainActivity) {
-                        observable.setListener(((MainActivity) getActivity()).getExerciseListener());
+                        observable.setListener(((MainActivity) getActivity()).getButtonListener());
                     }
-                    replaceView(observable.GetInformationLayout(getContext()));
+                    replaceView(ExerciseUiHelper.GetInformationLayout(getContext()));
                 }
                 if (type.isNew() && frameLayout != null && observable != null) {
                     if (getActivity() instanceof MainActivity) {
-                        observable.setListener(((MainActivity) getActivity()).getExerciseListener());
+                        observable.setListener(((MainActivity) getActivity()).getButtonListener());
                     }
                     if (getActivity() instanceof MainActivity) {
-                        replaceView(observable.GetNewLayout(getContext(), ((MainActivity)getActivity()).getButtonListener()));
+                        if(observable instanceof GymExercise) {
+                            observable.setExerciseType(fragmentParameters.getExerciseType());
+                            observable.setSeriesType(fragmentParameters.getExerciseSeries());
+                            observable.setListener(((MainActivity) getActivity()).getButtonListener());
+                            replaceView(ExerciseUiHelper.GetNewGymExerciseLayout(getContext(), (GymExercise) observable));
+
+                        }
                     }
                 }
             }

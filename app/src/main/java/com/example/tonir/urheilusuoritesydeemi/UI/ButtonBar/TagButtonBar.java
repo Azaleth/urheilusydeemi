@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.widget.LinearLayout;
 
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonBuilder;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonParameters;
@@ -15,11 +16,11 @@ import java.util.Arrays;
 
 public class TagButtonBar
         extends ButtonBarBase {
-    BaseButton.ButtonListener listener;
 
-    public TagButtonBar(Context context, BaseButton.ButtonListener listener, ButtonBarParameters parameters) {
+    public TagButtonBar(Context context, GeneralEventListener listener, ButtonBarParameters parameters) {
         super(context, parameters);
         this.listener = listener;
+        buildLayout(parameters.buttonTags);
     }
 
     public void setSelected(ButtonTag tag) {

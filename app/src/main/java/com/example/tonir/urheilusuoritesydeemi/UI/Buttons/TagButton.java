@@ -1,23 +1,19 @@
 package com.example.tonir.urheilusuoritesydeemi.UI.Buttons;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
 import com.example.tonir.urheilusuoritesydeemi.R;
-import com.example.tonir.urheilusuoritesydeemi.UI.Events.ButtonClickEventArgs;
 
 public class TagButton
-        extends BaseButton
-        implements View.OnClickListener {
+        extends BaseButton {
 
-    ButtonListener listener;
 
-    public TagButton(Context context, ButtonParameters parameters, LinearLayout rootView, ButtonListener listener) {
-        super(context, rootView);
+    public TagButton(Context context, ButtonParameters parameters, LinearLayout rootView, GeneralEventListener listener) {
+        super(context, rootView, parameters);
 
         this.listener = listener;
         inflate();

@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.tonir.urheilusuoritesydeemi.FireBaseService.FireBaseHandler;
+import com.example.tonir.urheilusuoritesydeemi.Handler.FireBaseHandler;
 import com.example.tonir.urheilusuoritesydeemi.R;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ClickableButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

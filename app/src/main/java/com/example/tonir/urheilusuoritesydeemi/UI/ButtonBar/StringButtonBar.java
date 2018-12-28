@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.widget.LinearLayout;
 
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonBuilder;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.ButtonParameters;
@@ -16,7 +17,7 @@ public class StringButtonBar
         extends ButtonBarBase{
 
 
-    public StringButtonBar(Context context, BaseButton.ButtonListener listener, ButtonBarParameters parameters) {
+    public StringButtonBar(Context context, GeneralEventListener listener, ButtonBarParameters parameters) {
         super(context, parameters);
         this.listener = listener;
         buildLayout(parameters.buttonTexts);

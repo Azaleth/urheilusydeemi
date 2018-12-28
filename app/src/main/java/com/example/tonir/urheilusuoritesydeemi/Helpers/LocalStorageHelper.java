@@ -1,4 +1,4 @@
-package com.example.tonir.urheilusuoritesydeemi.Handler;
+package com.example.tonir.urheilusuoritesydeemi.Helpers;
 
 public class LocalStorageHelper {
 

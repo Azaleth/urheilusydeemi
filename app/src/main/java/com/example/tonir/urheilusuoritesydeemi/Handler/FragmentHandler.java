@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
 import com.example.tonir.urheilusuoritesydeemi.Fragments.FragmentBase;
 import com.example.tonir.urheilusuoritesydeemi.Fragments.FragmentParameters;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
@@ -45,7 +46,7 @@ public class FragmentHandler {
     }
 
     //region Fragment Visibility
-    public void toggle(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) throws NoSuchFieldException {
+    public void toggle(FragmentParameters fragmentParameters, @Nullable GeneralEventListener clickCallback) throws NoSuchFieldException {
         if (visibleFragmentTags == null) {
             visibleFragmentTags = new ArrayList<>();
         }
@@ -118,8 +119,8 @@ public class FragmentHandler {
         }
     }
 
-    public void show(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) throws NoSuchFieldException {
-        boolean created = CreateFragmentIfNotExists(fragmentParameters, clickCallback);
+    public void show(FragmentParameters fragmentParameters, @Nullable GeneralEventListener eventListener) throws NoSuchFieldException {
+        boolean created = CreateFragmentIfNotExists(fragmentParameters, eventListener);
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentParameters.getIdentifier().toString());
         if (fragment == null) {
             fragment = FragmentFromCache(fragmentParameters.getIdentifier());
@@ -166,9 +167,9 @@ public class FragmentHandler {
     //endregion
 
     //region private
-    private boolean CreateFragmentIfNotExists(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) {
+    private boolean CreateFragmentIfNotExists(FragmentParameters fragmentParameters, @Nullable GeneralEventListener eventListener) {
         if (!FragmentExists(fragmentParameters.getIdentifier())) {
-            CreateNewFragment(fragmentParameters, clickCallback);
+            CreateNewFragment(fragmentParameters, eventListener);
             return true;
         }
         return false;
@@ -183,9 +184,9 @@ public class FragmentHandler {
         return (fragmentCache != null && id != null && fragmentCache.containsKey(id));
     }
 
-    private void CreateNewFragment(FragmentParameters fragmentParameters, @Nullable BaseButton.ButtonListener clickCallback) {
+    private void CreateNewFragment(FragmentParameters fragmentParameters, @Nullable GeneralEventListener eventListener) {
         try {
-            Fragment fragment = FragmentBase.newInstance(fragmentParameters, clickCallback);
+            Fragment fragment = FragmentBase.newInstance(fragmentParameters, eventListener);
             addFragmentToCache(fragment, fragmentParameters.getIdentifier());
         } catch (ClassNotFoundException e) {
             Log.e(fragmentParameters.getFragmentType().toString(), "CreateNewFragment: " + fragmentParameters.GetAsString(), e);

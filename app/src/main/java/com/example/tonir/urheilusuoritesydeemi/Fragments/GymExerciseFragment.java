@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.example.tonir.urheilusuoritesydeemi.Entities.ExerciseType;
 import com.example.tonir.urheilusuoritesydeemi.Entities.GymExercise;
 import com.example.tonir.urheilusuoritesydeemi.Enums.FragmentType;
 import com.example.tonir.urheilusuoritesydeemi.ViewModels.GymExerciseViewModel;
@@ -19,7 +20,7 @@ public class GymExerciseFragment extends FragmentBase<GymExerciseViewModel, GymE
     public void showGymExerciseById(UUID id, boolean forceReload){
         viewModel.GetGymExercise(id, forceReload).observe(this, observer);;
     }
-    public void showNewGymExerciseByType(String type){
+    public void showNewGymExerciseByType(ExerciseType type){
         viewModel.GetNewGymExerciseByType(type).observe(this, observer);
     }
 
@@ -31,7 +32,7 @@ public class GymExerciseFragment extends FragmentBase<GymExerciseViewModel, GymE
             showGymExerciseById(id);
         }
         if(type == FragmentType.NEW_GYM_EXERCISE){
-            showNewGymExerciseByType(exerciseType);
+            showNewGymExerciseByType(fragmentParameters.getExerciseType());
         }
     }
 }

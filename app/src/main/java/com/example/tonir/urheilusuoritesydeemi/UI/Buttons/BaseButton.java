@@ -1,26 +1,22 @@
 package com.example.tonir.urheilusuoritesydeemi.UI.Buttons;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 
-import com.example.tonir.urheilusuoritesydeemi.Entities.BaseExercise;
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
-import com.example.tonir.urheilusuoritesydeemi.R;
-import com.example.tonir.urheilusuoritesydeemi.UI.Events.BaseEventArgs;
-import com.example.tonir.urheilusuoritesydeemi.UI.Events.ButtonClickEventArgs;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
+import com.example.tonir.urheilusuoritesydeemi.Helpers.DoubleHelper;
+import com.example.tonir.urheilusuoritesydeemi.Events.BaseEvent;
+import com.example.tonir.urheilusuoritesydeemi.Events.ButtonClickEvent;
 import com.example.tonir.urheilusuoritesydeemi.UI.NoEditStringField;
 
-import java.util.UUID;
-
 public class BaseButton
-        extends AppCompatButton {
+        extends AppCompatButton
+        implements View.OnClickListener {
 
     private static final String TAG = BaseButton.class.getSimpleName();
     View view;
@@ -28,22 +24,19 @@ public class BaseButton
     NoEditStringField field;
     Button button;
     ButtonParameters parameters;
-    ButtonListener listener;
+    GeneralEventListener listener;
 
     public void setSelected(boolean selected) {
         this.button.setSelected(selected);
     }
 
-    public BaseButton(Context context, LinearLayout root) {
+    public BaseButton(Context context, LinearLayout root, ButtonParameters parameters) {
         super(context);
+        this.parameters = parameters;
         this.root = root;
 
-        if (parameters.getValue() == null) {
-            try {
-                parameters.setValue(Double.parseDouble(parameters.getButtonText()));
-            } catch (Exception e) {
-                Log.e(TAG, "BaseButton: ", e);
-            }
+        if (parameters.getValue() == null && parameters.getButtonText() != null) {
+            parameters.setValue(DoubleHelper.parseDouble(parameters.getButtonText()));
         }
     }
 
@@ -90,18 +83,14 @@ public class BaseButton
     public void setParameters(ButtonParameters parameters) {
         this.parameters = parameters;
     }
-
     //endregion
-    public interface ButtonListener {
-        void ClickEvent(Object sender, BaseEventArgs args);
-    }
 
     public void onClick(View v) {
         if (parameters.isHighlightOnClick()) {
             v.setSelected(!v.isSelected());
         }
         if (this.listener != null) {
-            listener.ClickEvent(this, new ButtonClickEventArgs(this.parameters));
+            listener.Event(this, new ButtonClickEvent(this.parameters));
         }
     }
 }

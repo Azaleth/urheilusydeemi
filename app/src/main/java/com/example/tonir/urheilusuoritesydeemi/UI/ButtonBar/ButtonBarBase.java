@@ -4,10 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
 import com.example.tonir.urheilusuoritesydeemi.R;
 import com.example.tonir.urheilusuoritesydeemi.UI.Buttons.BaseButton;
-import com.example.tonir.urheilusuoritesydeemi.UI.Events.BaseEventArgs;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class ButtonBarBase
 
     static final String TAG = ButtonBarBase.class.getSimpleName();
     Context context;
-    BaseButton.ButtonListener listener;
+    GeneralEventListener listener;
 
     LinearLayout view;
     List<BaseButton> buttons;
@@ -30,6 +29,7 @@ public class ButtonBarBase
 
     public ButtonBarBase(Context context, ButtonBarParameters buttonBarParameters) {
         super(context);
+        this.context = context;
         this.buttonBarParameters = buttonBarParameters;
     }
 

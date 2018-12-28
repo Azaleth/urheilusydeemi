@@ -5,34 +5,25 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.tonir.urheilusuoritesydeemi.Entities.ExerciseSeries;
+import com.example.tonir.urheilusuoritesydeemi.Entities.ExerciseType;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
+
+import java.util.List;
+
 public class ExerciseTypeSelectionDialog extends BaseDialog {
 
-    private final OnExerciseSelectedListener exerciseTypeSelectedListener;
-
-    public ExerciseTypeSelectionDialog(@NonNull Context context, OnExerciseSelectedListener exerciseTypeSelectedListener, String[] exerciseTypes) {
+    public ExerciseTypeSelectionDialog(@NonNull Context context, GeneralEventListener listener, List<ExerciseType> exerciseTypes) {
         super(context);
-        this.exerciseTypeSelectedListener = exerciseTypeSelectedListener;
-        buttonTexts = exerciseTypes;
+        this.listener = listener;
+
+        String[] texts = new String[exerciseTypes.size()];
+        for(int i = 0; i < exerciseTypes.size(); i++){
+            texts[i] = exerciseTypes.get(i).getExerciseType();
+        }
+
+        buttonTexts = texts;
+        this.errorText = "No Exercise Type Selected";
         BuildView(context);
-    }
-
-    @Override
-    public void show() {
-        super.show();
-        getButton(BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (exerciseTypeSelectedListener != null) {
-                    exerciseTypeSelectedListener.OnExerciseTypeSelected(selectedValue);
-                    dismiss();
-                } else {
-                    Toast.makeText(getContext(), "Exercise Not Selected", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    public interface OnExerciseSelectedListener {
-        void OnExerciseTypeSelected(String exerciseType);
     }
 }

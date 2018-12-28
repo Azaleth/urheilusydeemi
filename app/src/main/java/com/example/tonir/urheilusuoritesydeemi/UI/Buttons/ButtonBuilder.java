@@ -4,9 +4,10 @@ import android.content.Context;
 import android.widget.LinearLayout;
 
 import com.example.tonir.urheilusuoritesydeemi.Enums.ButtonTag;
+import com.example.tonir.urheilusuoritesydeemi.Events.GeneralEventListener;
 
 public class ButtonBuilder {
-    public static BaseButton getButton(Context context, ButtonParameters parameters, LinearLayout root, BaseButton.ButtonListener listener) {
+    public static BaseButton getButton(Context context, ButtonParameters parameters, LinearLayout root, GeneralEventListener listener) {
         if (parameters.getButtonType() != null) {
             switch (parameters.getButtonType()) {
                 case TAG:
@@ -31,9 +32,3 @@ public class ButtonBuilder {
         return parameters;
     }
 }
-/*
-    private UUID identifier;
-    private BaseExercise owner;
-    private Boolean highlightOnClick;
-    private Double value;
- */
